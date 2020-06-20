@@ -25,7 +25,7 @@ const STORE=[
     correctAnswer:"From a vietnamese soldier his dad fought aside with"
   },
   {
-    question:"Tiger is the only golfer to ever hold all 4 PGA majors in a row. Which of these is not a PGA major golf tournament?", 
+    question:"Tiger is the only golfer to ever hold all 4 PGA majors at once. Which of these is not a PGA major golf tournament?", 
     answers:['US Open', 'British Open', 'The Players Championship', 'The Masters'], 
     correctAnswer:"The Players Championship"
   },
@@ -144,10 +144,10 @@ function finalScore() {
     $('.resultBox').hide();
     $('.finalBox').html(`<h3>Your final score is ${score} out of 6.<h3>`);
     if (score >= 5) {
-      $('.finalBox').append(`<p>Well done! You might actually know a bit about the big cat himself!<p>`)
+      $('.finalBox').append(`<p>Well done! You might actually know a bit about the Big Cat!<p>`)
     }
     else if (score < 5 && score > 2) {
-      $('.finalBox').append(`<p>Well...  you're no super fan... but at least you something about him?<p>`)
+      $('.finalBox').append(`<p>Well...  you're no super fan... but at least you know something about him?<p>`)
     }
     else {
       $('.finalBox').append(`<p> Time to get out from under your rock buddy. Do you even know what golf is?<p>`)
