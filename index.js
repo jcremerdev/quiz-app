@@ -44,16 +44,7 @@ function startQuiz() {
     $('#question').addClass('box');
     $('.questionNumber').text(1);
     $('.score').text(0);
-    $('.questionBox').html(`
-    <form>
-    <legend>${STORE[questionIndex].question}
-    </legend>
-    <label><input type="radio" id="0" value="${STORE[questionIndex].answers[0]}" name="answer" required> <span>${STORE[questionIndex].answers[0]}<span> </label>
-    <label> <input type="radio" id="1" value="${STORE[questionIndex].answers[1]}" name="answer" required> <span>${STORE[questionIndex].answers[1]}<span> </label>
-    <label> <input type="radio" id="2" value="${STORE[questionIndex].answers[2]}" name="answer" required> <span>${STORE[questionIndex].answers[2]}<span> </label>
-    <label> <input type="radio" id="3" value="${STORE[questionIndex].answers[3]}" name="answer" required> <span>${STORE[questionIndex].answers[3]}<span> </label>
-    <button type="submit" class="submitButton button"> Submit</button>
-    </form>`);
+    questionText();
   });
 }
 
@@ -72,38 +63,54 @@ function submitAnswer() {
   })
 }
 
+function nextButton() {
+  $('.resultBox').append(`<button type="button" class="nextButton button"> Next Question </button>`);
+}
+
+function finalButton() {
+  $('.finalBox').html(`<button type="button" class="finalButton button"> Check Score! </button>`);
+}
+
 function correctAnswer() {
   updateScore();
   updateQuestionIndex();
   $('.questionBox').hide();
   $('.resultBox').show();
-  $('.resultBox').html(
-    `<h3> Right down the middle, nice shot!</h3>
-    <img src="images/celebratingTiger.jpg" alt="Tiger celebrating a big shot" class="image" width="200px">`);
+  correctAnswerText();
   if ((questionNumber +1) < STORE.length) {
-    $('.resultBox').append(`<button type="button" class="nextButton button"> Next Question </button>`);
+    nextButton();
   }
   else {
     $('.finalBox').show();
-    $('.finalBox').html(`<button type="button" class="finalButton button"> Check Score! </button>`);
+    finalButton();
   }
+}
+
+function correctAnswerText() {
+  $('.resultBox').html(
+    `<h3> Right down the middle, nice shot!</h3>
+    <img src="images/celebratingTiger.jpg" alt="Tiger celebrating a big shot" class="image" width="200px">`);
 }
 
 function wrongAnswer() {
   updateQuestionIndex();
   $('.questionBox').hide();
+  wrongAnswerText();
   $('.resultBox').show();
-  $('.resultBox').html(`
-    <h3> Shank!</h3>
-    <img src="images/bewildered-tiger.jpg" alt="Tiger bewildered after a bad read" class="image" width="200px">
-    <p>The correct answer was ${STORE[questionIndex - 1].correctAnswer}</p>`);
   if ((questionNumber +1) < STORE.length) {
-    $('.resultBox').append(`<button type="button" class="nextButton button"> Next Question </button>`);
+    nextButton();
   }
   else {
     $('.finalBox').show();
-    $('.finalBox').html(`<button type="button" class="finalButton button"> Check Score! </button>`);
+    finalButton();
   }
+}
+
+function wrongAnswerText(){
+  $('.resultBox').html(`
+  <h3> Shank!</h3>
+  <img src="images/bewildered-tiger.jpg" alt="Tiger bewildered after a bad read" class="image" width="200px">
+  <p>The correct answer was ${STORE[questionIndex - 1].correctAnswer}</p>`);
 }
 
 function updateQuestionNumber() {
@@ -116,18 +123,22 @@ function nextQuestion() {
     updateQuestionNumber();
     $('.resultBox').hide();
     $('.questionBox').show();
-    $('.questionBox').html(`
-    <form>
-    <legend>${STORE[questionIndex].question}
-    </legend>
-    <label> <input type="radio" id="0" value="${STORE[questionIndex].answers[0]}" name="answer" required> <span>${STORE[questionIndex].answers[0]}<span> </label>
-    <label> <input type="radio" id="1" value="${STORE[questionIndex].answers[1]}" name="answer" required> <span>${STORE[questionIndex].answers[1]}<span> </label>
-    <label> <input type="radio" id="2" value="${STORE[questionIndex].answers[2]}" name="answer" required> <span>${STORE[questionIndex].answers[2]}<span> </label>
-    <label> <input type="radio" id="3" value="${STORE[questionIndex].answers[3]}" name="answer" required> <span>${STORE[questionIndex].answers[3]}<span> </label>
-    <button type="submit" class="submitButton button"> Submit</button>
-    </form>`);
+    questionText();
  })
   
+}
+
+function questionText() {
+  $('.questionBox').html(`
+  <form>
+  <legend>${STORE[questionIndex].question}
+  </legend>
+  <label> <input type="radio" id="0" value="${STORE[questionIndex].answers[0]}" name="answer" required> <span>${STORE[questionIndex].answers[0]}<span> </label>
+  <label> <input type="radio" id="1" value="${STORE[questionIndex].answers[1]}" name="answer" required> <span>${STORE[questionIndex].answers[1]}<span> </label>
+  <label> <input type="radio" id="2" value="${STORE[questionIndex].answers[2]}" name="answer" required> <span>${STORE[questionIndex].answers[2]}<span> </label>
+  <label> <input type="radio" id="3" value="${STORE[questionIndex].answers[3]}" name="answer" required> <span>${STORE[questionIndex].answers[3]}<span> </label>
+  <button type="submit" class="submitButton button"> Submit</button>
+  </form>`);
 }
 
 function updateScore() {
@@ -142,32 +153,40 @@ function updateQuestionIndex() {
 function finalScore() {
   $('.finalBox').on('click', '.finalButton', function (event) {
     $('.resultBox').hide();
-    $('.finalBox').html(`<h3>Your final score is ${score} out of 6.<h3>`);
-    if (score >= 5) {
-      $('.finalBox').append(`<p>Well done! You might actually know a bit about the Big Cat!<p>`)
-    }
-    else if (score < 5 && score > 2) {
-      $('.finalBox').append(`<p>Well...  you're no super fan... but at least you know something about him?<p>`)
-    }
-    else {
-      $('.finalBox').append(`<p> Time to get out from under your rock buddy. Do you even know what golf is?<p>`)
-    }
-    $('.finalBox').append(`<button type="button" class="restartButton button"> Try Again? </button>`)
+    finalScoreMessage();
   })
+}
+
+function finalScoreMessage() {
+  $('.finalBox').html(`<h3>Your final score is ${score} out of 6.<h3>`);
+  if (score >= 5) {
+    $('.finalBox').append(`<p>Well done! You might actually know a bit about the Big Cat!<p>`)
+  }
+  else if (score < 5 && score > 2) {
+    $('.finalBox').append(`<p>Well...  you're no super fan... but at least you know something about him?<p>`)
+  }
+  else {
+    $('.finalBox').append(`<p> Time to get out from under your rock buddy. Do you even know what golf is?<p>`)
+  }
+  $('.finalBox').append(`<button type="button" class="restartButton button"> Try Again? </button>`)
 }
 
 function restartQuiz() {
   $('.finalBox').on('click', '.restartButton', function (event) {
     restart();
+    startText();
     $('.startBox').show();
-    $('.startBox').html(`
-    <section class="startBox">
-    <h1>Do you even know Tiger Woods?</h1>
-    <button type="button" class="startButton button">Begin</button>
-    </section>`)
     $('.finalBox').hide();
     $('.resultBox').hide();
   })
+}
+
+function startText() {
+  $('.startBox').html(`
+  <section class="startBox">
+  <h1>Do you even know Tiger Woods?</h1>
+  <button type="button" class="startButton button">Begin</button>
+  </section>`)
 }
 
 function restart() {
