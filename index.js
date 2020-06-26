@@ -89,7 +89,7 @@ function correctAnswer() {
 function correctAnswerText() {
   $('.resultBox').html(
     `<h3> Right down the middle, nice shot!</h3>
-    <img src="images/celebratingTiger.jpg" alt="Tiger celebrating a big shot" class="image" width="200px">`);
+    <img src="images/celebratingTiger.jpg" alt="Tiger celebrating a big shot" class="image">`);
 }
 
 function wrongAnswer() {
@@ -109,7 +109,7 @@ function wrongAnswer() {
 function wrongAnswerText(){
   $('.resultBox').html(`
   <h3> Shank!</h3>
-  <img src="images/bewildered-tiger.jpg" alt="Tiger bewildered after a bad read" class="image" width="200px">
+  <img src="images/bewildered-tiger.jpg" alt="Tiger bewildered after a bad read" class="image">
   <p>The correct answer was ${STORE[questionIndex - 1].correctAnswer}</p>`);
 }
 
@@ -131,8 +131,10 @@ function nextQuestion() {
 function questionText() {
   $('.questionBox').html(`
   <form>
+  <fieldset>
   <legend>${STORE[questionIndex].question}
   </legend>
+  </fieldset>
   <label> <input type="radio" id="0" value="${STORE[questionIndex].answers[0]}" name="answer" required> <span>${STORE[questionIndex].answers[0]}<span> </label>
   <label> <input type="radio" id="1" value="${STORE[questionIndex].answers[1]}" name="answer" required> <span>${STORE[questionIndex].answers[1]}<span> </label>
   <label> <input type="radio" id="2" value="${STORE[questionIndex].answers[2]}" name="answer" required> <span>${STORE[questionIndex].answers[2]}<span> </label>
