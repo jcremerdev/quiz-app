@@ -8,8 +8,8 @@
   body {
     font-family:'Helvetica Neue', sans-serif , helvetica, cursive;
     text-transform: uppercase;
-    color: black;
-    background-color: red;
+    color: #000000;
+    background-color: #ff5964;
   }
   
   .header {
@@ -50,6 +50,7 @@
     text-align: center;
     margin: auto;
     padding: 1em;
+    color: #ffffff;
     border: 0.1em #371d0d solid;
     background-color: #272727;
   }
